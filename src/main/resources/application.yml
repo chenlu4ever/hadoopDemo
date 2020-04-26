@@ -1,0 +1,38 @@
+spring:
+  datasource:
+    druid:
+      username: root
+      password: root
+      url: jdbc:hive2://192.168.29.128:10000/bustest
+      driverClassName: org.apache.hive.jdbc.HiveDriver
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM student_tbl
+      testWhileIdle: false
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      filters: stat
+      maxPoolPreparedStatementPerConnectionSize: 20
+      useGlobalDataSourceStat: true
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=10000
+  kafka:
+    bootstrap-servers: 192.168.29.128:9092
+    consumer:
+      group-id: hadoop_group
+      enable-auto-commit: true #消费后自动提交
+      auto-offset-reset: earliest #消费规则，从最早的开始
+      auto-commit-interval: 1000 #提交频率
+    listener:
+      missing-topics-fatal: false
+
+
+logging:
+  level:
+    com.example: debug
+server:
+  port: 8080
